@@ -35,7 +35,7 @@ public class ToggleButton extends HBox {
 			currentState.set(!currentState.get());
 		});
 
-		currentState.setValue(false);
+		setState(false);
 
 		getChildren().addAll(filler, toggleCircle);
 
@@ -62,7 +62,7 @@ public class ToggleButton extends HBox {
 		currentState.set(state);
 	}
 
-	public boolean getState() {return currentState.getValue();}
+	public boolean getState() {return currentState.get();}
 
 	public void setToolTip(Tooltip tooltip) {
 		Tooltip.install(this, tooltip);
