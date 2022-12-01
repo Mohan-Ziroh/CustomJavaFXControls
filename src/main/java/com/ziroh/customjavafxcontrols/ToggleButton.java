@@ -1,4 +1,4 @@
-package com.example.customjavafxcontrols;
+package com.ziroh.customjavafxcontrols;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.css.PseudoClass;

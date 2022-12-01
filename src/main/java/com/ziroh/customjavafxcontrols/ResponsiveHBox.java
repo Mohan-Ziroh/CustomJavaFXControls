@@ -1,4 +1,4 @@
-package com.example.customjavafxcontrols;
+package com.ziroh.customjavafxcontrols;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
