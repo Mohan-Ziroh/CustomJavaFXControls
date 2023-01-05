@@ -14,6 +14,7 @@ import java.util.function.Consumer;
  */
 public class SplashScreenWithTask<T> extends SplashScreen {
 
+	private Consumer<Throwable> onFailed;
 	private final ExecutorService service;
 	private final TaskBuilder<T> taskBuilder;
 
@@ -23,25 +24,24 @@ public class SplashScreenWithTask<T> extends SplashScreen {
 		taskBuilder = new TaskBuilder<>(callable);
 	}
 
-	public SplashScreenWithTask<T> onFinished(Consumer<T> onFinished) {
+	public void onFinished(Consumer<T> onFinished) {
 		taskBuilder.onSucceeded(value -> {
 			onFinished.accept(value);
 			super.onFinished();
 		});
-		return this;
 	}
 
-	public SplashScreenWithTask<T> onFailed(Consumer<Throwable> onFailed) {
-		taskBuilder.onFailed(error -> {
-			super.onFinished();
-			onFailed.accept(error);
-		});
-		return this;
+	public void onFailed(Consumer<Throwable> onFailed) {
+		this.onFailed = onFailed;
 	}
 
 	@Override
 	public void start() {
 		super.start();
+		taskBuilder.onFailed(error -> {
+			super.onFinished();
+			onFailed.accept(error);
+		});
 		service.execute(taskBuilder.build());
 	}
 
