@@ -14,23 +14,29 @@ import java.util.function.Consumer;
  */
 public class SplashScreenWithTask<T> extends SplashScreen {
 
-	private final Callable<T> callable;
 	private final ExecutorService service;
 	private final TaskBuilder<T> taskBuilder;
 
 	public SplashScreenWithTask(ImageView imageView, Callable<T> callable, ExecutorService service) {
 		super(imageView);
-		this.callable = callable;
 		this.service = service;
-		taskBuilder = new TaskBuilder<>(callable)
-				.onFailed(Throwable::printStackTrace);
+		taskBuilder = new TaskBuilder<>(callable);
 	}
 
-	public void onFinished(Consumer<T> onFinished) {
+	public SplashScreenWithTask<T> onFinished(Consumer<T> onFinished) {
 		taskBuilder.onSucceeded(value -> {
 			onFinished.accept(value);
 			super.onFinished();
 		});
+		return this;
+	}
+
+	public SplashScreenWithTask<T> onFailed(Consumer<Throwable> onFailed) {
+		taskBuilder.onFailed(error -> {
+			super.onFinished();
+			onFailed.accept(error);
+		});
+		return this;
 	}
 
 	@Override

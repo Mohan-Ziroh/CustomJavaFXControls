@@ -11,7 +11,7 @@ import javafx.scene.shape.Circle;
 
 public class ToggleButton extends HBox {
 
-	private final SimpleBooleanProperty currentState = new SimpleBooleanProperty();
+	private final SimpleBooleanProperty selectedState = new SimpleBooleanProperty();
 	private final PseudoClass ACTIVE = PseudoClass.getPseudoClass("active");
 
 	public ToggleButton() {
@@ -26,13 +26,13 @@ public class ToggleButton extends HBox {
 
 		toggleCircle.radiusProperty().bind(heightProperty().multiply(0.4));
 
-		currentState.addListener((obs, oldVal, newVal) -> {
+		selectedState.addListener((obs, oldVal, newVal) -> {
 			HBox.setHgrow(filler, newVal ? Priority.ALWAYS : Priority.NEVER);
 			super.pseudoClassStateChanged(ACTIVE, newVal);
 		});
 
 		setOnMouseClicked(event -> {
-			currentState.set(!currentState.get());
+			selectedState.set(!selectedState.get());
 		});
 
 		setState(false);
@@ -41,8 +41,8 @@ public class ToggleButton extends HBox {
 
 	}
 
-	public SimpleBooleanProperty currentStateProperty() {
-		return currentState;
+	public SimpleBooleanProperty selectedStateProperty() {
+		return selectedState;
 	}
 
 
@@ -53,16 +53,16 @@ public class ToggleButton extends HBox {
 	 */
 	public void setOnClicked(EventHandler<? super MouseEvent> eventHandler) {
 		super.setOnMouseClicked(event -> {
-			currentState.set(!currentState.get());
+			selectedState.set(!selectedState.get());
 			eventHandler.handle(event);
 		});
 	}
 
 	public void setState(boolean state) {
-		currentState.set(state);
+		selectedState.set(state);
 	}
 
-	public boolean getState() {return currentState.get();}
+	public boolean getState() {return selectedState.get();}
 
 	public void setToolTip(Tooltip tooltip) {
 		Tooltip.install(this, tooltip);

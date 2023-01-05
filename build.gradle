@@ -1,0 +1,48 @@
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'org.openjfx.javafxplugin' version "0.0.13"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+configurations.all { resolutionStrategy.cacheChangingModulesFor 0, 'seconds' }
+
+javafx {
+    version = '19'
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.graphics', 'javafx.base']
+}
+
+
+group = 'com.ziroh'
+version = '1.0-SNAPSHOT'
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+publishing {
+    repositories {
+        maven {
+            url = uri(project.findProperty("mvn.repo.url"))
+            credentials {
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
+            }
+        }
+    }
+
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'com.ziroh'
+            artifactId = 'custom-javafx-controls'
+            version = '1.0-SNAPSHOT'
+            from components.java
+        }
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
