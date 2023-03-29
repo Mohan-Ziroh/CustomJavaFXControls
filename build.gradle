@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-configurations.all { resolutionStrategy.cacheChangingModulesFor 0, 'seconds' }
+//configurations.all { resolutionStrategy.cacheChangingModulesFor 0, 'seconds' }
 
 javafx {
     version = '19'
@@ -19,7 +19,7 @@ javafx {
 
 
 group = 'com.ziroh'
-version = '1.0-SNAPSHOT'
+version = '1.1-SNAPSHOT'
 java.sourceCompatibility = JavaVersion.VERSION_11
 
 publishing {

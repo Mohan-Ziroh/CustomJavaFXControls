@@ -2,11 +2,12 @@ package com.ziroh.customjavafxcontrols.splashscreen;
 
 import com.ziroh.customjavafxcontrols.task.TaskBuilder;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.Objects;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -18,8 +19,7 @@ public class SplashScreenWithTask<T> extends SplashScreen {
 	private final ExecutorService service;
 	private final TaskBuilder<T> taskBuilder;
 
-	public SplashScreenWithTask(ImageView imageView, Callable<T> callable, ExecutorService service) {
-		super(imageView);
+	public SplashScreenWithTask(Callable<T> callable, ExecutorService service) {
 		this.service = service;
 		taskBuilder = new TaskBuilder<>(callable);
 	}
@@ -36,11 +36,11 @@ public class SplashScreenWithTask<T> extends SplashScreen {
 	}
 
 	@Override
-	public void start() {
-		super.start();
+	public void show() {
+		super.show();
 		taskBuilder.onFailed(error -> {
 			super.onFinished();
-			onFailed.accept(error);
+			if(Objects.nonNull(onFailed)) onFailed.accept(error);
 		});
 		service.execute(taskBuilder.build());
 	}

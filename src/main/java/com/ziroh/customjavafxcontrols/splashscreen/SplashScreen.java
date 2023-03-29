@@ -3,6 +3,7 @@ package com.ziroh.customjavafxcontrols.splashscreen;
 import com.ziroh.customjavafxcontrols.style.StyleSheetsLoader;
 import javafx.animation.Transition;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -16,52 +17,33 @@ import java.util.List;
 /**
  * @author Mohan
  */
-public class SplashScreen {
+public class SplashScreen extends VBox {
 
 	protected final Stage stage;
-	private final ImageView imageView;
-	private final List<Transition> transitions = new ArrayList<>();
-	private final VBox splashBox = new VBox();
-	private double width = 500;
-	private double height = 400;
 
-	public SplashScreen(ImageView imageView) {
-		stage = new Stage();
-		this.imageView = imageView;
-	}
-
-	public void addTransitions(Transition... transitions) {
-		this.transitions.addAll(List.of(transitions));
-	}
-
-	public void addStyleSheets(String... sheets) {
-		StyleSheetsLoader.load(splashBox, sheets);
-	}
-
-	public void setPrefSize(double width, double height) {
-		this.width = width;
-		this.height = height;
+	public SplashScreen() {
+		this.stage = new Stage();
 	}
 
 	public void onFinished() {
 		stage.close();
 	}
 
-	public void start() {
+	public void show() {
 
 		stage.initStyle(StageStyle.TRANSPARENT);
 
-		imageView.getStyleClass().add("icon");
+		getStyleClass().add("splashbox");
 
-		splashBox.getChildren().add(new Group(imageView));
-		splashBox.getStyleClass().add("parent");
-		splashBox.getStylesheets().add(getClass().getClassLoader().getResource("com/ziroh/customjavafxcontrols/spashscreen.css").toString());
+		StyleSheetsLoader.load(this, "com/ziroh/customjavafxcontrols/spashscreen.css");
 
-		stage.setScene(new Scene(splashBox, width, height, Color.TRANSPARENT));
+		stage.setScene(new Scene(this, Color.TRANSPARENT));
 		stage.show();
 
-		transitions.forEach(Transition::play);
+	}
 
+	public void addChildren(Node... children) {
+		getChildren().addAll(children);
 	}
 
 }

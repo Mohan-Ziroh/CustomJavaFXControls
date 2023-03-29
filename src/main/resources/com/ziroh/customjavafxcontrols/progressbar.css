@@ -1,0 +1,26 @@
+.progress-bar > .bar {
+    -fx-padding:0;
+    -fx-background-radius:20;
+    -fx-background-insets: 0;
+    -fx-background-color: #8CCE00;
+}
+
+.progress-bar {
+    -fx-background-color: #FFFFFF;
+    -fx-min-width: 100;
+    -fx-min-height: 20;
+}
+
+.progress-bar > .track {
+   -fx-background-color: lightgray;
+   -fx-background-radius:20;
+   -fx-background-insets: 0, 1;
+}
+
+.progress-bar:reverse > .bar {
+    -fx-accent: lightgray;
+}
+
+.progress-bar:reverse > .track {
+    -fx-background-color: #042299;
+}

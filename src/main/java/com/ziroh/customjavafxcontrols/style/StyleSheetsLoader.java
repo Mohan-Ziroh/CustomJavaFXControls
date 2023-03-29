@@ -1,5 +1,6 @@
 package com.ziroh.customjavafxcontrols.style;
 
+import com.ziroh.customjavafxcontrols.splashscreen.SplashScreen;
 import javafx.scene.layout.Region;
 
 /**

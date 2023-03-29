@@ -1,8 +1,4 @@
-.parent {
-    -fx-background-radius: 20;
-    -fx-background-color: #ffffff;
-    -fx-border-radius: 20;
-    -fx-background-insets: 20;
+.splashbox {
     -fx-alignment: center;
 }
 
